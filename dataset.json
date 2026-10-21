@@ -1,0 +1,390 @@
+[
+
+{
+    "Question": "Who got the highest score?",
+    "SQL": "SELECT batter, SUM(runs_batter) AS total_runs FROM deliveries GROUP BY batter ORDER BY total_runs DESC LIMIT 1;"
+  },
+
+
+
+{"Question":"Who achieved the highest score?",
+"SQL": 
+"SELECT batter, SUM(runs_batter) AS total_runs FROM deliveries GROUP BY batter ORDER BY total_runs DESC LIMIT 1;"},
+
+{"Question":"Who achieved the highest runs?",
+"SQL": 
+"SELECT batter, SUM(runs_batter) AS total_runs FROM deliveries GROUP BY batter ORDER BY total_runs DESC LIMIT 1;"},
+
+
+{"Question":"Who achieved the highest score (or runs) in innings {innings_number}",
+"SQL": 
+"SELECT batter, SUM(runs_batter) AS total_runs FROM deliveries where innings={innings_number} GROUP BY batter ORDER BY total_runs DESC LIMIT 1;"
+},
+
+
+{"Question":"Who achieved the highest score (or runs) in {innings_number} innings ",
+"SQL": 
+"SELECT batter, SUM(runs_batter) AS total_runs FROM deliveries where innings={innings_number}  GROUP BY batter ORDER BY total_runs DESC LIMIT 1;"},
+
+{"Question":"Give me details about each batter’s number of balls faced ,the actual runs scored by them",
+"SQL": 
+"SELECT batter, count(*),SUM(runs_batter) AS total_runs FROM deliveries GROUP BY batter;"},
+
+
+{"Question":"Give me details about the number of boundaries delivered by each batter.",
+"SQL": 
+"SELECT batter,SUM(boundary_4) AS total_fours,SUM(boundary_6) AS total_sixes,SUM(boundary_4 + boundary_6) AS total_boundaries FROM cricket_commentary.deliveries GROUP BY batter ORDER BY total_boundaries DESC;"
+},
+
+{"Question":"Give me details about each batter’s number of balls faced ,the actual runs scored by them in innings {innings_number}",
+"SQL": 
+"SELECT batter, count(*) AS balls_faced,SUM(runs_batter) AS total_runs FROM deliveries where innings= {innings_number} GROUP BY batter; "},
+
+
+{"Question":"Give me details about each batter’s number of balls faced ,the actual runs scored by them in {innings_number} innings",
+"SQL": 
+"SELECT batter, count(*) AS balls_faced,SUM(runs_batter) AS total_runs FROM deliveries where innings={innings_number} GROUP BY batter;"},
+
+
+{"Question":"Give me details about the number of boundaries delivered by each batter in innings {innings_number} ",
+"SQL": 
+"SELECT batter,SUM(boundary_4) AS total_fours,SUM(boundary_6) AS total_sixes,SUM(boundary_4 + boundary_6) AS total_boundaries FROM cricket_commentary.deliveries where innings={innings_number} GROUP BY batter ORDER BY total_boundaries DESC;"},
+
+{"Question":"Who achieved the Least score (or runs)?",
+"SQL": 
+"SELECT batter, SUM(runs_batter) AS total_runs FROM deliveries GROUP BY batter ORDER BY total_runs ASC LIMIT 1;"},
+
+
+{"Question":"Who achieved the Least score (or runs) in innings?",
+"SQL": 
+"SELECT batter, SUM(runs_batter) AS total_runs FROM deliveries where innings={innings_number} GROUP BY batter ORDER BY total_runs ASC LIMIT 1;"},
+
+{"Question":"Which team scored the highest or which team won the match?",
+"SQL": 
+"SELECT team,SUM(runs_total) as score_team FROM cricket_commentary.deliveries Group by team order by score_team desc limit 1;"},
+
+{"Question":"What is the target set by the team or what is the score by team 1",
+"SQL": 
+"SELECT team,SUM(runs_total) FROM cricket_commentary.deliveries where innings=1 Group by team;"},
+
+{"Question":"Give the scores secured by both the teams.",
+"SQL": 
+"SELECT team,SUM(runs_total) as score_team FROM cricket_commentary.deliveries Group by team;"
+},
+
+{"Question":"What is the current score?",
+"SQL": 
+"Select score_after_ball FROM cricket_commentary.deliveries order by id desc limit 1;"
+},
+
+
+{"Question":"What is the latest score?",
+"SQL": 
+"Select score_after_ball FROM cricket_commentary.deliveries order by id desc limit 1;"
+},
+
+
+{"Question":"Give me the details about each bowler’s  number of balls delivered and wickets taken by him.",
+"SQL": 
+"Select bowler, count(*),SUM(wicket) FROM deliveries GROUP BY bowler;"
+},
+
+{"Question":"Give me the details about each bowler’s  number of balls delivered and wickets taken by him in innings {innings_number} ",
+"SQL": 
+"Select bowler, count(*),SUM(wicket) FROM deliveries where innings={innings_number} GROUP BY bowler;"
+},
+
+
+{"Question":"Give me the details about each bowler’s  number of balls delivered and wickets taken by him in {innings_number} innings",
+"SQL": 
+"Select bowler, count(*),SUM(wicket) FROM deliveries where innings={innings_number} GROUP BY bowler;"
+},
+
+{"Question":"Which bowler(or which player) took max wickets",
+"SQL": "Select bowler, SUM(wicket) as  total_wickets_per_bowler FROM cricket_commentary.deliveries where wicket=1 GROUP BY bowler order by total_wickets_per_bowler desc limit 1;"
+},
+
+{"Question":"Which bowler(or which player) took max wickets in {innings_number} innings",
+"SQL":"Select bowler, SUM(wicket) as  total_wickets_per_bowler FROM cricket_commentary.deliveries where wicket=1 and innings={innings_number} GROUP BY bowler order by total_wickets_per_bowler desc limit 1;"
+},
+
+{"Question":"Which bowler(or which player) took max wickets in innings {innings_number}",
+"SQL": 
+"Select bowler, SUM(wicket) as  total_wickets_per_bowler FROM cricket_commentary.deliveries where wicket=1 and innings={innings_number} GROUP BY bowler order by total_wickets_per_bowler desc limit 1;"
+},
+
+
+{"Question":"Which bowler(or which player) took min wickets?",
+"SQL": 
+"Select bowler, SUM(wickets) total_wickets_per bowler FROM deliveries where wicket=1 GROUP BY bowler order by total_wickets_per bowler asc limit 1;"
+},
+
+
+
+
+{"Question":"Which bowler(or which player) took min wickets in {innings_number} innings",
+"SQL": 
+"Select bowler, SUM(wicket) as  total_wickets_per_bowler FROM cricket_commentary.deliveries where wicket=1 and innings={innings_number} GROUP BY bowler order by total_wickets_per_bowler asc limit 1;"
+},
+
+{"Question":"Which bowler(or which player) took min wickets in innings {innings_number}",
+"SQL": 
+"Select bowler, SUM(wicket) as  total_wickets_per_bowler FROM cricket_commentary.deliveries where wicket=1 and innings={innings_number} GROUP BY bowler order by total_wickets_per_bowler asc limit 1;"
+},
+
+{"Question":"How  many balls  the  bowler {bowler_name} delivered?",
+"SQL": 
+"select bowler,count(*) from deliveries group by bowler where bowler={bowler_name};"
+},
+
+
+{"Question":"How  many balls  the  bowler {bowler_name} delivered in innings {innings_number}?",
+"SQL": 
+"select bowler,count(*) from deliveries group by bowler where bowler={bowler_name} and innings={innings_number};"
+},
+
+{"Question":"How  many balls  the  bowler {bowler_name} delivered in {innings_number} innings?",
+"SQL": 
+"select bowler,count(*) from deliveries group by bowler where bowler={bowler_name} and innings={innings_number};"
+},
+
+
+{"Question":"What are the boundaries in {innings_number}  innings and  over number{over_number}?",
+"SQL":"SELECT SUM(boundary_4) AS total_fours,SUM(boundary_6) AS total_sixes,SUM(boundary_4 + boundary_6) AS total_boundaries FROM cricket_commentary.deliveries Where innings= {innings_number} and over_number= {over_number} ;"
+},
+
+{"Question":"What are the boundaries in over number{over_number}?",
+"SQL":"SELECT SUM(boundary_4) AS total_fours,SUM(boundary_6) AS total_sixes,SUM(boundary_4 + boundary_6) AS total_boundaries FROM cricket_commentary.deliveries Where over_number= {over_number};"
+},
+
+
+{"Question":"What are the total boundaries so far (or until now)?",
+"SQL": 
+"SELECT SUM(boundary_4) AS total_fours,SUM(boundary_6) AS total_sixes,SUM(boundary_4 + boundary_6) AS total_boundaries FROM cricket_commentary.deliveries;"
+},
+
+
+{"Question":"What are the total boundaries in innings {innings_number} ?",
+"SQL": 
+"SELECT SUM(boundary_4) AS total_fours,SUM(boundary_6) AS total_sixes,SUM(boundary_4 + boundary_6) AS total_boundaries FROM cricket_commentary.deliveries where innings={innings_number};"
+},
+
+
+{"Question":"What are the total boundaries in current  innings?",
+"SQL":"SELECT SUM(boundary_4) AS total_fours,SUM(boundary_6) AS total_sixes,SUM(boundary_4 + boundary_6) AS total_boundaries FROM cricket_commentary.deliveries WHERE innings = (SELECT innings FROM cricket_commentary.deliveries ORDER BY id DESC LIMIT 1 );"
+},
+
+
+{"Question":"How many wickets fallen so far (or until now) in the current innings ?",
+"SQL":"SELECT SUM(CASE WHEN wicket = TRUE THEN 1 ELSE 0 END) AS total_wickets_fallen FROM cricket_commentary.deliveries WHERE innings = (SELECT innings FROM cricket_commentary.deliveries ORDER BY id DESC LIMIT 1 );"
+},
+
+{"Question":"How many wickets fallen in a innings {innings_number}  and  over number {over_number}? ",
+"SQL":"SELECT Sum(wicket) AS total_wickets_fallen FROM cricket_commentary.deliveries Where innings={innings_number} and over_number={over_number} ;"
+},
+
+{"Question":"What is the score in a innings {innings_number}  and  over number {over_number} ? ",
+"SQL":"SELECT sum(runs_total) FROM cricket_commentary.deliveries Where innings= {innings_number} and  over_number={over_number} ;"
+},
+
+{"Question":"What is the score  in each over in an innings?",
+"SQL": "SELECT  innings,over_number,sum(runs_total) FROM cricket_commentary.deliveries Group by  innings,over_number;"
+},
+
+
+{"Question":"What is the score  in a innings {innings_number} and  ball  number{ball_number} ?",
+"SQL":"SELECT runs_total as score_per_ball FROM cricket_commentary.deliveries Where ball_number={ball_number}  and innings={innings_number} ;"
+},
+
+
+
+{"Question":"What is the score  for each ball in innings{innings_number}  and over number {over_number}?",
+"SQL":"SELECT ball_number,runs_total as score_per_ball FROM cricket_commentary.deliveries Where innings ={innings_number}  and  over_number= {over_number} group by ball_number,runs_total;"
+},
+
+
+{"Question":"How many extras delivered so far?",
+"SQL":"SELECT count(extras_type) FROM cricket_commentary.deliveries WHERE extras_type IS NOT NULL ;"
+},
+
+{"Question":"How many extras delivered in innings {innings_number} ?",
+"SQL": "SELECT count(extras_type) FROM cricket_commentary.deliveries WHERE extras_type IS NOT NULL and innings={innings_number};"
+},
+
+{"Question":"How many extras delivered so far with the count for each extra type?",
+"SQL":"SELECT extras_type,count(extras_type) FROM cricket_commentary.deliveries WHERE extras_type IS NOT NULL  group by extras_type;"
+},
+
+
+
+{"Question":"How many extras delivered  with the count for each extra type in innings{innings_number} ?",
+"SQL": "SELECT extras_type,count(extras_type) FROM cricket_commentary.deliveries WHERE extras_type IS NOT NULL and innings= {innings_number}  group by extras_type;"
+},
+
+{"Question":"Which ball deliveries have extras?",
+"SQL": "SELECT actual_delivery, extras_type FROM cricket_commentary.deliveries WHERE extras_type IS NOT NULL ;"
+},
+
+
+{"Question":"Which ball deliveries have extras in innings {innings_number}",
+"SQL": "SELECT actual_delivery, extras_type FROM cricket_commentary.deliveries WHERE extras_type IS NOT NULL and innings= {innings_number};"
+},
+
+
+{"Question":"Which over has highest extras in innings {innings_number}?",
+"SQL":"SELECT over_number,count(extras_type) as total_extras_in_a_over FROM cricket_commentary.deliveries WHERE extras_type IS NOT NULL and innings={innings_number} group by over_number order by total_extras_in_a_over desc limit 1;"
+},
+
+{"Question":"Which over has highest runs for both the teams?",
+"SQL": "SELECT team,over_number,count(runs_total) as total_runs_in_a_over FROM cricket_commentary.deliveries group by team,over_number order by total_runs_in_a_over desc limit 1;"
+},
+
+{"Question":"Which over has highest runs for team {team_name}?",
+"SQL": "SELECT team,over_number,SUM(runs_total) AS total_runs_in_a_over FROM cricket_commentary.deliveries WHERE team = {team_name} GROUP BY team, over_number ORDER BY total_runs_in_a_over DESC LIMIT 1;"
+},
+
+
+{"Question":"Which over has least runs for both the teams?",
+"SQL": "SELECT team, over_number, total_runs_in_a_over FROM ( SELECT team,over_number,SUM(runs_total) AS total_runs_in_a_over,ROW_NUMBER() OVER (PARTITION BY team ORDER BY SUM(runs_total) ASC) AS rn FROM cricket_commentary.deliveries GROUP BY team, over_number ) t WHERE rn = 1;"
+},
+
+
+
+{"Question":"Which over has least runs for a team{team_name}?",
+"SQL":"SELECT team,over_number,count(runs_total) as total_runs_in_a_over FROM cricket_commentary.deliveries where team={team_name} group by team,over_number order by total_runs_in_a_over asc limit 1;"
+},
+
+
+{"Question":"Which over was the best performance for batter{batter_name}?",
+"SQL":"SELECT team,batter,over_number,sum(runs_batter) as total_runs_by_batter_in_a_over FROM cricket_commentary.deliveries where batter={batter_name} group by team,batter,over_number order by total_runs_by_batter_in_a_over desc limit 1;"
+},
+
+
+{"Question":"Over wise performance for a batter{batter_name} ",
+"SQL":"select over_number,sum(runs_batter) from cricket_commentary.deliveries where batter={batter_name} group by over_number;"
+},
+
+
+{"Question":"Which over was the best performance for batter {batter_name}",
+"SQL": "select over_number,sum(runs_batter) as total_runs_by_batter from cricket_commentary.deliveries where batter={batter_name} group by  over_number order by total_runs_by_batter desc  limit 1;"
+},
+
+
+
+{"Question":"Which over was the least performance for batter {batter_name}?",
+"SQL":"select over_number,sum(runs_batter) as total_runs_by_batter from cricket_commentary.deliveries where batter= group by  over_number order by total_runs_by_batter asc  limit 1;"
+},
+
+
+{"Question":"Give details about each bowler’s extras.",
+"SQL":"select bowler,count(*) as total_extra_balls_per_bowler  from cricket_commentary.deliveries  where extras_type is not  null group by bowler;"
+},
+
+{"Question":"Give details about each bowler’s extras in both the innings",
+"SQL": "select bowler,innings,count(*) as total_extra_balls_per_bowler  from cricket_commentary.deliveries  where extras_type is not  null group by bowler,innings;"
+},
+
+
+{"Question":"Give details about each bowler’s extras in innings {innings_number}",
+"SQL": "select bowler,count(*) as total_extra_balls_per_bowler  from cricket_commentary.deliveries  where extras_type is not  null and innings = {innings_number}  group by bowler;"
+},
+
+
+
+{"Question":"Which bowler gave max extras?",
+"SQL": "select bowler,count(*) as total_extra_balls_per_bowler  from cricket_commentary.deliveries  where extras_type is not  null group by bowler order by  total_extra_balls_per_bowler desc limit 1 ;"
+},
+
+
+{"Question":"Which bowler gave max extras in innings{innings_number}?",
+"SQL": "select bowler,count(*) as total_extra_balls_per_bowler  from cricket_commentary.deliveries  where extras_type is not  null and innings={innings_number}  group by bowler order by  total_extra_balls_per_bowler desc limit 1 ;"
+},
+
+
+{"Question":"Which bowler gave least extras?",
+"SQL": "select bowler,count(*) as total_extra_balls_per_bowler  from cricket_commentary.deliveries  where extras_type is not  null group by bowler order by  total_extra_balls_per_bowler asc limit 1 ;"
+},
+
+
+{"Question":"Which bowler gave least extras in innings {innings_number}? ",
+
+"SQL": "select bowler,count(*) as total_extra_balls_per_bowler  from cricket_commentary.deliveries  where extras_type is not  null and innings ={innings_number} group by bowler order by  total_extra_balls_per_bowler asc limit 1 ;"
+},
+
+
+{"Question":"Which bowler gave no extras?",
+"SQL": "SELECT team,bowler FROM cricket_commentary.deliveries GROUP BY team,bowler HAVING SUM(CASE WHEN extras_type IS NOT NULL AND extras_type <> '' THEN 1 ELSE 0 END) = 0; "
+},
+
+
+{"Question":"Which bowler gave no extras in innings {innings_number}?",
+"SQL": 
+"SELECT  innings,bowler FROM cricket_commentary.deliveries WHERE innings = {innings_number}  GROUP BY innings,bowler HAVING SUM(CASE WHEN extras_type IS NOT NULL AND extras_type <> '' THEN 1 ELSE 0 END) = 0;"
+},
+
+{"Question":"Legal ball percentage by each bowler",
+"SQL": 
+"SELECT    bowler,    COUNT(*) AS total_balls_delivered,SUM(CASE WHEN extras_type IS NULL THEN 1 ELSE 0 END) AS legal_balls,ROUND((SUM(CASE WHEN extras_type IS NULL THEN 1 ELSE 0 END) * 100.0) / COUNT(*),2) AS legal_ball_percentage FROM cricket_commentary.deliveries GROUP BY bowler ORDER BY total_balls_delivered DESC;"
+},
+
+
+
+{"Question":"Legal ball percentage by each bowler in innings {innings_number} ",
+"SQL":"SELECT    bowler,    COUNT(*) AS total_balls_delivered,SUM(CASE WHEN extras_type IS NULL THEN 1 ELSE 0 END) AS legal_balls,ROUND((SUM(CASE WHEN extras_type IS NULL THEN 1 ELSE 0 END) * 100.0) / COUNT(*),2) AS legal_ball_percentage FROM cricket_commentary.deliveries where innings={innings_number} GROUP BY bowler ORDER BY total_balls_delivered DESC; "
+},
+
+
+{"Question":"Legal ball percentage by each bowler and the number of wickets by each bowler",
+"SQL": "SELECT bowler,COUNT(*) AS total_balls_delivered,SUM(CASE WHEN extras_type IS NULL THEN 1 ELSE 0 END) AS legal_balls,ROUND((SUM(CASE WHEN extras_type IS NULL THEN 1 ELSE 0 END) * 100.0) / COUNT(*),2) AS legal_ball_percentage,SUM(CASE WHEN wicket = TRUE THEN 1 ELSE 0 END) AS wickets FROM deliveries GROUP BY bowler ORDER BY total_balls_delivered DESC;"
+},
+
+
+
+{"Question":"Legal ball percentage by each bowler and the number of wickets by each bowler in innings {innings_number} ",
+"SQL": "SELECT Innings,team,bowler,COUNT(*) AS total_balls_delivered,SUM(CASE WHEN extras_type IS NULL THEN 1 ELSE 0 END) AS legal_balls,ROUND((SUM(CASE WHEN extras_type IS NULL THEN 1 ELSE 0 END) * 100.0) / COUNT(*),2) AS legal_ball_percentage,SUM(CASE WHEN wicket = TRUE THEN 1 ELSE 0 END) AS wickets FROM cricket_commentary.deliveries where innings ={innings_number} GROUP BY innings,team,bowler ORDER BY total_balls_delivered DESC;"
+},
+
+
+{"Question":"Give me details about each partnership runs for a team",
+"SQL": "SELECT team,batter AS striker,non_striker,SUM(runs_batter + runs_extras) AS partnership_runs FROM cricket_commentary.deliveries GROUP BY team,batter, non_striker;"
+},
+
+
+{"Question":"Give me details about Best partnership runs",
+"SQL": "SELECT team, LEAST(batter, non_striker) AS player1,GREATEST(batter, non_striker) AS player2,SUM(runs_batter + runs_extras) AS partnership_runs FROM cricket_commentary.deliveries GROUP BY team, LEAST(batter, non_striker), GREATEST(batter, non_striker) ORDER BY partnership_runs DESC LIMIT 1;"
+},
+
+
+
+{"Question":"Give me details about Best partnership runs in innings{innings_number}",
+"SQL": "SELECT team,LEAST(batter, non_striker) AS player1,GREATEST(batter, non_striker) AS player2,SUM(runs_batter + runs_extras) AS partnership_runs FROM cricket_commentary.deliveries WHERE innings =  {innings_number} GROUP BY team, LEAST(batter, non_striker), GREATEST(batter, non_striker) ORDER BY partnership_runs DESC LIMIT 1;"
+},
+
+
+{"Question":"Who are the batters who have played or still playing in innings{innings_number} ?",
+"SQL": "SELECT DISTINCT batter AS player FROM cricket_commentary.deliveries WHERE innings = {innings_number} UNION SELECT DISTINCT non_striker AS player FROM cricket_commentary.deliveries WHERE innings = {innings_number} ORDER BY player;"
+},
+
+
+
+
+{"Question":"Who are the bowlers who have bowled  or still bowling?",
+"SQL": 
+"SELECT DISTINCT bowler FROM cricket_commentary.deliveries WHERE innings = (SELECT MAX(innings) FROM cricket_commentary.deliveries ) ORDER BY bowler; "
+},
+
+
+
+{"Question":"Who are the bowlers who have bowled  or still bowling in innings {innings_number} ?",
+"SQL": 
+"SELECT DISTINCT bowler FROM cricket_commentary.deliveries WHERE innings = {innings_number} ORDER BY bowler;"
+},
+
+
+
+{"Question":"Who are the bowlers who have bowled  or still bowling in current  innings ?",
+"SQL":"SELECT DISTINCT bowler FROM cricket_commentary.deliveries WHERE innings = (SELECT MAX(innings) FROM cricket_commentary.deliveries ) ORDER BY bowler;"
+}
+
+
+]
