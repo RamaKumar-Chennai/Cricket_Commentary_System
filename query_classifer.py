@@ -154,14 +154,12 @@ def build_classifier_app():
         }
 
     def relevant_context(state: State):
-        
+        print("entering the new relevant context fn in query_classifer module")
         user_query = state["query"].strip()
         print(" the user query in relevant_context fn is ", user_query)
         
-        # 1. Load the word doc
         from docx import Document
         from langchain_core.documents import Document as LangDocument
-
 
         doc = Document("Cricket_FAQ.docx")
 
@@ -170,17 +168,28 @@ def build_classifier_app():
             if para.text.strip():
                 texts.append(para.text.strip())
 
-        # Convert list of strings into LangChain Document objects
-        docs = [LangDocument(page_content=t, metadata={"source": "Cricket_FAQ.docx"}) for t in texts]       
-        splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
-        split_docs = splitter.split_documents(docs)
+        # Convert entire document into one string
+        full_text = "\n".join(texts)
+
+        # Split using your separator line
+        faq_pairs = full_text.split(
+            "------------------------------------------------------------------------------------------------------------------------------------"
+        )
+
+        # Create one LangChain document per FAQ
+        split_docs = [
+            LangDocument(
+                page_content=pair.strip(),
+                metadata={"source": "Cricket_FAQ.docx"}
+            )
+            for pair in faq_pairs
+            if pair.strip()
+        ]
+
+        print("len(split_docs) =", len(split_docs))
 
 
-        print("len(split_docs) is ",len(split_docs))
-        #len(split_docs) is  
-
-
-        # Step 5: Convert to embeddings
+        # Convert to embeddings
         emb=HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",model_kwargs={'device':'cpu'})
         vect=FAISS.from_documents(split_docs,emb)
         vect.save_local("vector_emb")
@@ -316,3 +325,4 @@ def classify_query(query: str) -> str:
     print("result['final_answer'] in classify_query fn is ",result["final_answer"])
 
     return result["final_answer"]
+
