@@ -206,22 +206,12 @@ def replay():
                 # ✅ Scorecard block
                 block_html = f"""
                 <div style='background:#e3f2fd;padding:12px;border-radius:10px;'>
-                  <!-- First line -->
-                  <div style='display:flex;justify-content:space-between;'>
-                    <div>
-                      <b>{team}</b> &nbsp;&nbsp;
-                      <b>Ball:</b> {ball_display}
-                    </div>
-                    <div>
-                      <b>RUNS:</b> &nbsp;&nbsp;
-                      🏏 Batter: {runs_batter} &nbsp;&nbsp;
-                      🎁 Extras: {runs_extras} &nbsp;&nbsp;
-                      ➕ Total: {runs_total}
-                    </div>
+                  <div>
+                    <b>{team}</b> &nbsp;&nbsp;
+                    <b>Ball:</b> {ball_display} &nbsp;&nbsp;
+                    <b>Runs:</b> {runs_total} &nbsp;&nbsp;&nbsp;&nbsp; {extras_detail}
                   </div>
-                
-                  <!-- Second line with spacing -->
-                  <div style='display:flex;justify-content:space-between;margin-top:8px;'>
+                  <div style='display:flex;justify-content:space-between;'>
                     <div>
                       <b>Score:</b> {total_runs}/{wickets} &nbsp;&nbsp;&nbsp; in <b>Overs:</b> {ball_display}
                     </div>
@@ -458,10 +448,27 @@ footer {
     display: none !important;
 }
 
-
-
-
 """
+
+
+import soundfile as sf
+import numpy as np
+from transformers import pipeline
+
+# Load Whisper-tiny
+asr = pipeline("automatic-speech-recognition", model="openai/whisper-tiny")
+
+def speech_to_text(audio_path):
+    if audio_path is None:
+        return "No audio recorded"
+    # Load audio manually with soundfile (no ffmpeg)
+    samples, sr = sf.read(audio_path)
+    # Whisper expects float32 numpy array
+    samples = np.array(samples, dtype=np.float32)
+    # Pass raw waveform and sample rate
+    result = asr({"array": samples, "sampling_rate": sr})
+    return result["text"]
+
 
 
 with gr.Blocks(css=css_styles, title="Autonomous Sports Commentary (Live Replay)") as demo:
@@ -498,8 +505,15 @@ with gr.Blocks(css=css_styles, title="Autonomous Sports Commentary (Live Replay)
             commentary_audio = gr.Audio(label="🔊 Voice Commentary", type="filepath", elem_classes="voice-box")
             
             gr.Markdown("### ⚙️ Controls")
-            stats_input = gr.Textbox(label="Question", placeholder="e.g. Who is top scorer?",elem_classes="controls-box")
+            stats_input = gr.Textbox(label="Question", placeholder="Speak or type your query here",elem_classes="controls-box")
             stats_output = gr.Textbox(label="Response",elem_classes="controls-box")
+
+
+
+            mic_input = gr.Audio(type="filepath", label="🎤 Speak")
+               
+            mic_input.change(speech_to_text, inputs=mic_input, outputs=stats_input)
+
 
             reset_btn = gr.Button("Reset")
     
@@ -512,3 +526,6 @@ with gr.Blocks(css=css_styles, title="Autonomous Sports Commentary (Live Replay)
     live_btn.click(fn=replay, inputs=None, outputs=[commentary_html, detailed, commentary_audio])
 
 demo.launch(inbrowser=True)
+
+
+
