@@ -205,22 +205,32 @@ def replay():
                 
                 # ✅ Scorecard block
                 block_html = f"""
-                <div style='background:#e3f2fd;padding:12px;border-radius:10px;'>
-                  <div>
-                    <b>{team}</b> &nbsp;&nbsp;
-                    <b>Ball:</b> {ball_display} &nbsp;&nbsp;
-                    <b>Runs:</b> {runs_total} &nbsp;&nbsp;&nbsp;&nbsp; {extras_detail}
-                  </div>
-                  <div style='display:flex;justify-content:space-between;'>
-                    <div>
-                      <b>Score:</b> {total_runs}/{wickets} &nbsp;&nbsp;&nbsp; in <b>Overs:</b> {ball_display}
-                    </div>
-                    <div>
-                      ⚡ <b>Current RR:</b> {current_rr} &nbsp;&nbsp;
-                      <b>INNINGS:</b> {innings_index+1}
-                    </div>
-                  </div>
-                """
+                                <div style='background:#e3f2fd;padding:12px;border-radius:10px;'>
+                                  <!-- First line -->
+                                  <div style='display:flex;justify-content:space-between;'>
+                                    <div>
+                                      <b>{team}</b> &nbsp;&nbsp;
+                                      <b>Ball:</b> {ball_display}
+                                    </div>
+                                    <div>
+                                      <b>RUNS:</b> &nbsp;&nbsp;
+                                      🏏 Batter: {runs_batter} &nbsp;&nbsp;
+                                      🎁 Extras: {runs_extras} &nbsp;&nbsp;
+                                      ➕ Total: {runs_total}
+                                    </div>
+                                  </div>
+                                
+                                  <!-- Second line with spacing -->
+                                  <div style='display:flex;justify-content:space-between;margin-top:8px;'>
+                                    <div>
+                                      <b>Score:</b> {total_runs}/{wickets} &nbsp;&nbsp;&nbsp; in <b>Overs:</b> {ball_display}
+                                    </div>
+                                    <div>
+                                      ⚡ <b>Current RR:</b> {current_rr} &nbsp;&nbsp;
+                                      <b>INNINGS:</b> {innings_index+1}
+                                    </div>
+                                  </div>
+                                """
 
                 # 🎯 Target + Required RR (second innings only)
                 if innings_index == 1:
